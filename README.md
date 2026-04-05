@@ -1,3 +1,5 @@
+![CI](https://github.com/lukecampbell/tfbs-ui/actions/workflows/ci.yml/badge.svg)
+
 # TFBS UI
 
 React frontend for the TFBS application, built with Vite and TypeScript. Designed to be served as a Progressive Web App (PWA) backed by a Rust API server.
