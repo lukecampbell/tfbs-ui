@@ -12,6 +12,7 @@ interface User {
 function Dashboard() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [showWelcome, setShowWelcome] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,13 @@ function Dashboard() {
         fetchUser();
     }, [navigate]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowWelcome(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
+
     if (loading) {
         return (
             <Container className="min-vh-100 d-flex align-itmes-center justify-content-center">
@@ -42,7 +50,7 @@ function Dashboard() {
         <div>
             <TFBSNav />
             <Container className="mt-4">
-                <Alert variant="success">
+                <Alert variant="success" show={showWelcome} transition>
                     Welcome {user!.login}
                 </Alert>
                 <Card>
