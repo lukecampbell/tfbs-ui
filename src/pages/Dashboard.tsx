@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert, Container, Spinner } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import TFBSNav from "../components/TFBSNav";
 
 interface User {
     login: string,
@@ -15,7 +16,7 @@ function Dashboard() {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await fetch('/api/user');
+            const res = await fetch('/api/user', {credentials: "include"});
             if (!res.ok) {
                 navigate('/');
                 return;
@@ -38,19 +39,22 @@ function Dashboard() {
     }
     
     return (
-        <Container className="mt-4">
-            <Alert variant="success">
-                Welcome {user!.login}
-            </Alert>
-            <Card>
-                <Card.Body>
-                    <Card.Title>Dashboard</Card.Title>
-                    <Card.Text className="text-muted">
-                        Dashboard goes here
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        </Container>
+        <div>
+            <TFBSNav />
+            <Container className="mt-4">
+                <Alert variant="success">
+                    Welcome {user!.login}
+                </Alert>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>Dashboard</Card.Title>
+                        <Card.Text className="text-muted">
+                            Dashboard goes here
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Container>
+        </div>
     )
 }
 

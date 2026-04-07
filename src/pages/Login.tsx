@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -19,7 +19,8 @@ function Login() {
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({login, password})
+      body: JSON.stringify({login, password}),
+      credentials: 'include',
     });
 
     if (res.ok) {
@@ -28,6 +29,17 @@ function Login() {
       setError('Invalid login or password.');
     }
   }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch('/api/user', {credentials: 'include'});
+      if (res.ok) {
+        navigate('/dashboard');
+      }
+    };
+
+    fetchUser();
+  }, [navigate])
 
   return (
     <Container
