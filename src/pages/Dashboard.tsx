@@ -1,35 +1,12 @@
 import { useEffect, useState } from "react";
 import { Alert, Container, Spinner } from "react-bootstrap";
 import { Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import TFBSNav from "../components/TFBSNav";
-
-interface User {
-    login: string,
-    roles: string[],
-}
+import { useAuth } from "../hooks/useAuth";
 
 function Dashboard() {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
     const [showWelcome, setShowWelcome] = useState(true);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const res = await fetch('/api/user', {credentials: "include"});
-            if (!res.ok) {
-                navigate('/');
-                return;
-            }
-
-            const data: User = await res.json();
-            setUser(data);
-            setLoading(false);
-        }
-
-        fetchUser();
-    }, [navigate]);
+    const { user, loading } = useAuth();
 
     useEffect(() => {
         const timer = setTimeout(() => {
